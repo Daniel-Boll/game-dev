@@ -1,6 +1,3 @@
-# Game Development Experiments
+# Bevy
 
-## Prefixes
-
-- Gamejam
-- Bevy
+## Plataform player experiment
