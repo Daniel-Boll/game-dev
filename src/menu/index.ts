@@ -15,16 +15,28 @@ export class Menu extends GameLoop {
     "ui_credit",
   ];
   private isMouseOverLanguage: boolean = false;
+  private isMouseOverDifficulty: boolean = false;
+
+  private currentDifficulty: string = "";
   private currentOption: u8 = 0;
 
   private previousStateMouse: u8 = 0;
   private previousStateGamepad: u8 = 0;
 
-  public setup(): void {}
+  public getDifficulty(): string {
+    return this.currentDifficulty.replace("ui_", "");
+  }
+
+  public setup(): void {
+    this.currentDifficulty = "ui_hard";
+  }
 
   public ui(): void {
     store<u16>(w4.DRAW_COLORS, this.isMouseOverLanguage ? 3 : 2);
     w4.text(Language.getLanguage(), 140, 5);
+
+    store<u16>(w4.DRAW_COLORS, this.isMouseOverDifficulty ? 3 : 2);
+    w4.text(Language.getContent(this.currentDifficulty), 10, 5);
 
     for (let i = 0; i < this.options.length; i++) {
       const option = this.options[i];
@@ -40,6 +52,7 @@ export class Menu extends GameLoop {
     this.ui();
     this.changeOptions();
     this.checkMouseOverLanguage();
+    this.checkMouseOverDifficulty();
   }
 
   public changeOptions(): void {
@@ -84,6 +97,27 @@ export class Menu extends GameLoop {
 
     if (justClicked & w4.MOUSE_LEFT && this.isMouseOverLanguage) {
       Language.nextLanguage();
+      playMenuOptionTransitionSound();
+    }
+
+    // Delegate the mouse previous state to the last function to use it
+  }
+
+  public checkMouseOverDifficulty(): void {
+    const mouse = load<u8>(w4.MOUSE_BUTTONS);
+    const justClicked = mouse & (mouse ^ this.previousStateMouse);
+
+    this.isMouseOverDifficulty = isMouseOver(
+      10,
+      Language.getContent(this.currentDifficulty).length * 10,
+      5,
+      10
+    );
+
+    if (justClicked & w4.MOUSE_LEFT && this.isMouseOverDifficulty) {
+      this.currentDifficulty =
+        this.currentDifficulty == "ui_easy" ? "ui_hard" : "ui_easy";
+
       playMenuOptionTransitionSound();
     }
 

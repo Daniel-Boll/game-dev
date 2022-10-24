@@ -1,7 +1,8 @@
 import * as w4 from "../wasm4";
 import { MetaGameLoop, MetaGameState, MetaGameStates } from "../state";
 import { Palette, PaletteType } from "../ui";
-import { Language } from "../../controllers";
+import { GameState, GameStates, Language } from "../../controllers";
+import { Menu } from "../../menu";
 
 let paletteState: PaletteType;
 let lastMouseState: u8 = 0;
@@ -156,6 +157,11 @@ export class Shop extends MetaGameLoop {
   ];
 
   public setup(): void {
+    (<Menu>GameState.getInfoOfState(GameStates.MENU)).getDifficulty() == "easy"
+      ? (this.coins = 80)
+      : (this.coins = 0);
+
+    // Get info about the difficulty in the map
     paletteState = Palette.getInstance().getCurrentPalette();
     Palette.getInstance().useColor(PaletteType.GOLD);
 

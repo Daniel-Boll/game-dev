@@ -3,6 +3,8 @@ const en: Map<string, string> = new Map<string, string>();
 en.set("ui_begin_new_game", "Begin new game");
 en.set("ui_continue_game", "Continue");
 en.set("ui_credit", "Credits");
+en.set("ui_easy", "Easy");
+en.set("ui_hard", "Hard");
 
 en.set("level_end_level", "Level");
 en.set("level_end_won", "You won!");

@@ -140,15 +140,6 @@ export class Ball extends Entity {
   public draw(): Ball {
     store<u16>(w4.DRAW_COLORS, this.rebound / 2 + 1);
 
-    // w4.trace(`\nFloat position: ${this.position.x}, ${this.position.y}`);
-    // w4.trace(
-    //   `Int position: ${<i32>Math.round(this.position.x)}, ${<i32>(
-    //     Math.round(this.position.y)
-    //   )}\n`
-    // );
-
-    // w4.oval(this.position.x, this.position.y, this.size, this.size);
-
     w4.oval(
       <i32>(this.position.x + 0.5),
       <i32>(this.position.y + 0.5),

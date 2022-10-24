@@ -1,3 +1,5 @@
+import { GameState, GameStates } from "../../controllers";
+import { Menu } from "../../menu";
 import { Position } from "../../utils/structures";
 import { isMouseOver } from "../../utils/ui";
 import { Delayer } from "../../utils/utils";
@@ -51,6 +53,10 @@ export class Map extends MetaGameLoop {
   }
 
   public setup(): void {
+    (<Menu>GameState.getInfoOfState(GameStates.MENU)).getDifficulty() == "easy"
+      ? (this.levelAvailable = 5)
+      : (this.levelAvailable = 0);
+
     this.levels.push({
       levelId: 0,
       difficulty: 1,

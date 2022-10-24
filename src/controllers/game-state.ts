@@ -48,6 +48,10 @@ export class GameState {
     return this.state.get(this.currentScene);
   }
 
+  public static getInfoOfState(state: GameStates): GameLoop {
+    return this.state.get(state);
+  }
+
   public static setState(state: GameStates): void {
     this.currentScene = state;
     if (!this.timesCalled.has(this.currentScene))
