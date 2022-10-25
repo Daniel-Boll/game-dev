@@ -143,7 +143,10 @@ class Option extends Clickable {
 
 export class Shop extends MetaGameLoop {
   // Player props
-  private coins: u8 = 0;
+  private coins: u8 =
+    (<Menu>GameState.getInfoOfState(GameStates.MENU)).getDifficulty() == "easy"
+      ? 80
+      : 0;
   private using: i8 = -1;
 
   // UI
@@ -157,10 +160,6 @@ export class Shop extends MetaGameLoop {
   ];
 
   public setup(): void {
-    (<Menu>GameState.getInfoOfState(GameStates.MENU)).getDifficulty() == "easy"
-      ? (this.coins = 80)
-      : (this.coins = 0);
-
     // Get info about the difficulty in the map
     paletteState = Palette.getInstance().getCurrentPalette();
     Palette.getInstance().useColor(PaletteType.GOLD);
